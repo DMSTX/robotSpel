@@ -1,3 +1,6 @@
+package com.company;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GameEngine {
@@ -6,7 +9,12 @@ public class GameEngine {
     private int noOfZebras;
     private int noOfCheetahs;
 
-    public GameEngine(){ //defaultkonstruktor
+    private GameBoard gameBoard = new GameBoard(getNoOfZebras());
+
+    ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
+    ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
+
+    public GameEngine() { //defaultkonstruktor
         this.noOfZebras = 10;
         this.noOfCheetahs = 3;
     }
@@ -18,30 +26,45 @@ public class GameEngine {
 
     // Medlemsmetoder
 
-    public String menu(){ // Skriver ut menyn i början av spelet
+    public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
+        for (int i = 0; i < noOfZebras; i++) {
+            zebraList.add(new Zebra(2, 4)); // Här skickar den med två låtsasvärden till konstruktorn
+        }
+    }
+
+    public String menu() { // Skriver ut menyn i början av spelet
         String s = "Välkommen till spelet!\n" +
-                "Skriv in hur många zebror du vill ha.\n" +
                 "För att avsluta tryck 0.\n";
         return s;
     }
 
-    public int readNoOfZebras(){
-        boolean x = false;
+    public int readNoOfZebras() { // prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
+        boolean x = true;
         int n = 0;
         do {
+            System.out.print("Skriv in antal zebror, max 10 stycken: ");
             try {
                 Scanner scan = new Scanner(System.in);
                 n = scan.nextInt();
-            } catch (NumberFormatException e) {
-                System.out.println("Du måste skriva in ett heltal");
-                x = true;
+                x = false;
+            } catch (InputMismatchException e) {
+                System.out.println("Det där var inte ett heltal!");
             } catch (Exception e) {
-                System.out.println("Oväntat fel");
+                System.out.println("Oväntat fel, du måste skriva in ett heltal!");
+            }
+            if (n > 10 || n < 0) {
+                System.out.println("Hallå, max 10 zebror och inga negativa zebror, tack!");
                 x = true;
             }
-        } while (x); // det finns ett fel här nånstans
+        } while (x);
+
+
 
         return n;
+    }
+
+    public void removeZebras() {
+        this.noOfZebras--;
     }
 
     // Getter och setter-metoder
@@ -53,14 +76,11 @@ public class GameEngine {
         return noOfCheetahs;
     }
 
-    public void setNoOfCheetahs(int cheetahs) {
-        this.noOfCheetahs = cheetahs;
+    public void setNoOfCheetahs(int noOfCheetahs) {
+        this.noOfCheetahs = noOfCheetahs;
     }
 
-    public void setNoOfZebras(int zebras) {
-        this.noOfZebras = zebras;
+    public void setNoOfZebras(int noOfZebras) {
+        this.noOfZebras = noOfZebras;
     }
-
-
-
 }
