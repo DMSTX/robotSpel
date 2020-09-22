@@ -1,6 +1,6 @@
 package com.company;
 
-public class GamePiece {
+public class GamePiece extends GameBoard{
 
     private int startPos;
     private int endPos;
