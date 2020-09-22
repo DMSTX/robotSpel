@@ -7,10 +7,10 @@ public class GamePiece {
 
 
 }
-public class GameObject {
+public class GamePiece {
     public int x, y;
  
-    public GameObject(int x, int y) {              // Konstruktorn som deklarerar klassvariablerna
+    public GamePiece(int x, int y) {              // Konstruktorn som deklarerar klassvariablerna
         this.x = x;
         this.y = y;
     }
@@ -31,7 +31,8 @@ public class GameObject {
         this.y = y;
     }
  
-    public Rectangle getBounds(int x, int y){       //Returnerar det område som objektet täcker på spelplanen,
-        return new Rectangle(x, y, 64, 64);         //(så att man kan avgöra om två objekt kolliderar med varandra)
+    public Square getBounds(int x, int y){       //Returnerar det område som objektet täcker på spelplanen,
+        return new Square(x, y, 64, 64);         //(så att man kan avgöra om två objekt kolliderar med varandra)
  
 }
+    //Detta är ett arv som kan användas av alla rörande objekt alltså zebra och cheeta
