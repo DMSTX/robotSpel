@@ -68,6 +68,12 @@ public class GameEngine {
         }
     }
 
+    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med zebror
+        for (int i = 0; i < noOfCheetahs; i++) {
+            cheetahList.add(new Cheetah());
+        }
+    }
+
     public void removeZebras() {
         this.noOfZebras--;
     } // Minskar antalet zebror med 1
