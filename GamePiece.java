@@ -1,38 +1,57 @@
 package com.company;
 
-public class GamePiece extends GameBoard{
-
-    private int startPos;
-    private int endPos;
-
-
-}
 public class GamePiece {
-    public int x, y;
- 
+
+    private int positionX;
+    private int positionY;
+    private int startPos; //String, vektor?
+    //private int endPos; // kommer nog inte behövas
+
+
+    private enum direction { //regler för hur en spelpjäs kan flytta sig
+        //up (positionX -1, PositionY), //måste innehålla positioner x,y och begränsnigar
+        down,
+        left,
+        right,
+        diagUpLeft,
+        diagUpRight,
+        diagDownLeft,
+        diagDownRight
+    }
+
+
+    public GamePiece (){
+        positionX = 0;
+        positionY = 0;
+    }
     public GamePiece(int x, int y) {              // Konstruktorn som deklarerar klassvariablerna
-        this.x = x;
-        this.y = y;
+        setPositionX(x);
+        setPositionY(y);
     }
- 
-    public int getX() {                            // Returnera respektive koordinat 
-        return x;
+
+    public int getPositionX() {                            // Returnera respektive koordinat
+        return this.positionX;
     }
- 
-    public int getY() {
-        return y;
+
+    public int getPositionY() {
+        return this.positionY;
     }
- 
-    public void setX(int x) {                      // Sätt ett nytt värde på x respektive y
-        this.x = x;
+
+    public void setPositionX(int x) {                      // Sätt ett nytt värde på x respektive y
+        if (x >= 0 && x <= 10) {
+            this.positionX = x;
+        }
     }
- 
-    public void setY(int y) {
-        this.y = y;
+
+    public void setPositionY(int y) {
+        if (y >= 0 && y <= 10) {
+            this.positionY = y;
+        }
     }
- 
-    public Square getBounds(int x, int y){       //Returnerar det område som objektet täcker på spelplanen,
-        return new Square(x, y, 64, 64);         //(så att man kan avgöra om två objekt kolliderar med varandra)
- 
-}
-    //Detta är ett arv som kan användas av alla rörande objekt alltså zebra och cheeta
+
+        //public Square getBounds ( int x, int y){       //Returnerar det område som objektet täcker på spelplanen,
+            //return new Square(x, y, 64, 64);         //(så att man kan avgöra om två objekt kolliderar med varandra)
+
+        //}
+//Detta är ett arv som kan användas av alla rörande objekt alltså zebra och cheeta
+    }
