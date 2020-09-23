@@ -9,7 +9,7 @@ public class Main {
         ge.setNoOfZebras(ge.readNoOfZebras()); // Sätter antalet Zebror till antal som användaren skriver in
         ge.setNoOfCheetahs(ge.getNoOfZebras()); // Sätter antalet Cheetahs utifrån det antal zebror som skrivs in
 
-        System.out.println(ge.getNoOfZebras()); // --- testutskrift för att se att antal zebror lästs in
+        System.out.println(ge.getNoOfZebras()); // testutskrift för att se att antal zebror lästs in
         System.out.println(ge.getNoOfCheetahs()); // testutskrift för att se att antal cheetahs har satts
 
         ge.fillZebraList(ge.getNoOfZebras()); // fyller en lista med det antal zebror användaren angivit

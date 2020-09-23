@@ -12,7 +12,6 @@ public class GamePiece {
         Random rand = new Random();
         positionX = rand.nextInt(9); // nåt som kollar att platsen e ledig?
         positionY = rand.nextInt(9);
-
     }
 
     // Konstruktorn som deklarerar klassvariablerna (kommer nog inte behövas, men ligger kvar ifall att)

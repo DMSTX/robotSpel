@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 enum direction { //regler för hur en spelpjäs kan flytta sig
@@ -39,7 +40,7 @@ public class GameEngine {
         return s;
     }
 
-    public int readNoOfZebras() {   //prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
+    public int readNoOfZebras() { //prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
         boolean x = true;
         int n = 0;
         do {
@@ -81,8 +82,13 @@ public class GameEngine {
         return noOfCheetahs;
     }
 
-    public void setNoOfCheetahs(int noOfZebras) {
-        this.noOfCheetahs = noOfZebras - 1;
+    public void setNoOfCheetahs(int noOfZebras) { // Randomiserar antalet geparder mellan 1 och en mindre än antalet zebror
+        Random rand = new Random();
+        if (noOfZebras == 1){
+            this.noOfCheetahs = 1;
+        } else {
+            this.noOfCheetahs = rand.nextInt(noOfZebras - 1) + 1;
+        }
     }
 
     public void setNoOfZebras(int noOfZebras) {
