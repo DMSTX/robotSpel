@@ -27,28 +27,19 @@ public class GameEngine {
     ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
     ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
 
-    public GameEngine() { //defaultkonstruktor //DENNA KOMMER I NULÄGET ALLTID ANROPAS!
-        this.noOfZebras = 10;
-        this.noOfCheetahs = 3;
-    }
-
-    //LOGISKT FEL HÄR!!
-    // ett GameEngine-objekt måste skapas för att kunna skriva ut menyn,
-    // men det är först i menyn vi ber användaren skriva in antal zebror
-    // Så i nuläget är det omöjligt att kalla på denna konstruktorn.
-    public GameEngine(int noOfZebras) { // konstruktor med variabler
-        this.noOfZebras = noOfZebras;
-        this.noOfCheetahs = noOfZebras - 1; // här vill vi randomisera antalet geparder
+    public GameEngine() {   //defaultkonstruktor
+        this.noOfZebras = 0;
+        this.noOfCheetahs = 0;
     }
 
     // Medlemsmetoder
-    public String menu() { // Skriver ut menyn i början av spelet
+    public String menu() {  // Skriver ut menyn i början av spelet
         String s = "Välkommen till spelet!\n" +
-                "För att avsluta tryck 0.\n";
+                "För att avsluta tryck 0.\n"; // obs att i nuläget så avslutas inte programmet om man skriver 0
         return s;
     }
 
-    public int readNoOfZebras() { // prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
+    public int readNoOfZebras() {   //prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
         boolean x = true;
         int n = 0;
         do {
@@ -90,8 +81,8 @@ public class GameEngine {
         return noOfCheetahs;
     }
 
-    public void setNoOfCheetahs(int noOfCheetahs) {
-        this.noOfCheetahs = noOfCheetahs;
+    public void setNoOfCheetahs(int noOfZebras) {
+        this.noOfCheetahs = noOfZebras - 1;
     }
 
     public void setNoOfZebras(int noOfZebras) {

@@ -3,11 +3,9 @@ package com.company;
 import java.util.Random;
 
 public class GamePiece {
-
+    //Klassmedlemmar
     private int positionX;
     private int positionY;
-    private int startPos; //String, vektor?
-    //private int endPos; // kommer nog inte behövas
 
     //Defaultkonstruktor som sätter random startpositioner
     public GamePiece() {
