@@ -14,9 +14,11 @@ public class Main {
 
         ge.fillZebraList(ge.getNoOfZebras()); // fyller en lista med det antal zebror användaren angivit
 
-        /*for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att skriva ut listan med zebrornas x-position och y-position
-            System.out.println(ge.zebraList.get(i).getPositionX());
-            System.out.println(ge.zebraList.get(i).getPositionY());
-        }*/
+        for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att skriva ut listan med zebrornas x-position och y-position
+            System.out.print("Plats: ");
+            System.out.print(ge.zebraList.get(i).getPositionX()+":");
+            System.out.print(ge.zebraList.get(i).getPositionY());
+            System.out.println();
+        }
     }
 }
