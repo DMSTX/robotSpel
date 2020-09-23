@@ -1,4 +1,5 @@
 package com.company;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -24,26 +25,23 @@ public class GameEngine {
     private GamePiece gamePiece = new GamePiece(); //Aggregat
 
     ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
-    //ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
+    ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
 
-    public GameEngine() { //defaultkonstruktor
+    public GameEngine() { //defaultkonstruktor //DENNA KOMMER I NULÄGET ALLTID ANROPAS!
         this.noOfZebras = 10;
         this.noOfCheetahs = 3;
     }
 
+    //LOGISKT FEL HÄR!!
+    // ett GameEngine-objekt måste skapas för att kunna skriva ut menyn,
+    // men det är först i menyn vi ber användaren skriva in antal zebror
+    // Så i nuläget är det omöjligt att kalla på denna konstruktorn.
     public GameEngine(int noOfZebras) { // konstruktor med variabler
         this.noOfZebras = noOfZebras;
         this.noOfCheetahs = noOfZebras - 1; // här vill vi randomisera antalet geparder
     }
 
     // Medlemsmetoder
-
-    public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
-        for (int i = 0; i < noOfZebras; i++) {
-            zebraList.add(new Zebra()); // Här skickar den med två låtsasvärden till konstruktorn
-        }
-    }
-
     public String menu() { // Skriver ut menyn i början av spelet
         String s = "Välkommen till spelet!\n" +
                 "För att avsluta tryck 0.\n";
@@ -69,15 +67,18 @@ public class GameEngine {
                 x = true;
             }
         } while (x);
-
-
-
         return n;
+    }
+
+    public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
+        for (int i = 0; i < noOfZebras; i++) {
+            zebraList.add(new Zebra());
+        }
     }
 
     public void removeZebras() {
         this.noOfZebras--;
-    }
+    } // Minskar antalet zebror med 1
 
 
     // Getter och setter-metoder

@@ -7,9 +7,7 @@ public class GameBoard {
     public char cheetah = 'c';
     public char[][] gameboard = new char[10][10];
 
-    //noOfZebras?
-
-    //Default konstruktor
+    //Defaultkonstruktor
     public GameBoard() {
         startGameboard();
     }
@@ -35,6 +33,7 @@ public class GameBoard {
         }
     }
 
+    //Metod som skriver ut spelplan uppdaterad med nya positioner
     public void printNewBoard(char[][] gameboard) {
         this.gameboard = gameboard;
         for (int i = 0; i < this.gameboard.length; i++) {
@@ -57,16 +56,18 @@ public class GameBoard {
         //printNewBoard(gameboard);
     }*/
 
-    public void setGameboard (char [][] gameboard){
+    //Setter för Gameboard
+    public void setGameboard(char[][] gameboard) {
         Zebra z = new Zebra();
         System.out.println(z.getPositionX());
         //gameboard [x][y] = zebra;
         //this.gameboard = gameboard;
     }
 
-    //public void clearPosition (int x, int y){
-        //this.gameboard [x] [y] = ' ';
-    }
+    //Metod som tar bort innehåll på en position i spelplanen
+    /*public void clearPosition (int x, int y){
+    this.gameboard [x] [y] = ' ';*/
+}
 
 
 

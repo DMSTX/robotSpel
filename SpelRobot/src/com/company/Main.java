@@ -3,24 +3,18 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
-    GameBoard test = new GameBoard(); //test
+        GameEngine ge = new GameEngine(); // skapar ett objekt av GameEngine-typ
+        System.out.println(ge.menu()); // skriver ut menyn
+        ge.setNoOfZebras(ge.readNoOfZebras()); // Sätter antalet Zebror till antal som användaren skriver in
+        //Här behövs ett anrop till GameEngines setter för att ge den antalet zebror
 
+        //System.out.println(ge.getNoOfZebras()); --- testutskrift för att se att antal zebror lästs in
 
+        ge.fillZebraList(ge.getNoOfZebras()); // fyller en lista med det antal zebror användaren angivit
 
-
-
-    GameEngine ge = new GameEngine();
-    System.out.println(ge.menu());
-    ge.setNoOfZebras(ge.readNoOfZebras());
-
-        //System.out.println(ge.getNoOfZebras()); --- testutskrift
-
-    ge.fillZebraList(ge.getNoOfZebras()); // testar att fylla en lista med zebror
-
-    for (int i = 0; i < ge.getNoOfZebras(); i++) { // skriver ut listan med zebror
-        System.out.println(ge.zebraList.get(i).getPositionX());
-        System.out.println(ge.zebraList.get(i).getPositionY());
-    }
+        /*for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att skriva ut listan med zebrornas x-position och y-position
+            System.out.println(ge.zebraList.get(i).getPositionX());
+            System.out.println(ge.zebraList.get(i).getPositionY());
+        }*/
     }
 }
