@@ -10,7 +10,7 @@ public class GamePiece {
     //Defaultkonstruktor som sätter random startpositioner
     public GamePiece() {
         Random rand = new Random();
-        positionX = rand.nextInt(9); // nåt som kollar att platsen e ledig?
+        positionX = rand.nextInt(9); // Här behövs kontrollstruktur för att de inte ska hamna på samma plats!
         positionY = rand.nextInt(9);
     }
 

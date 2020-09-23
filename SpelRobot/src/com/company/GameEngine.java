@@ -22,8 +22,8 @@ public class GameEngine {
     private int noOfZebras;
     private int noOfCheetahs;
 
-    private GameBoard gameBoard = new GameBoard(); //Aggregat
-    private GamePiece gamePiece = new GamePiece(); //Aggregat
+    // private GameBoard gameBoard = new GameBoard(); //Aggregat
+    // private GamePiece gamePiece = new GamePiece(); //Aggregat
 
     ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
     ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
@@ -68,7 +68,7 @@ public class GameEngine {
         }
     }
 
-    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med zebror
+    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med geparder
         for (int i = 0; i < noOfCheetahs; i++) {
             cheetahList.add(new Cheetah());
         }

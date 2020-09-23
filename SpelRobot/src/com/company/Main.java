@@ -29,6 +29,17 @@ public class Main {
             System.out.println();
         }
 
+        GameBoard test = new GameBoard(10,10); // skapar ett GameBoard-objekt
 
+        test.startGameboard(); // kör metoden som ger GameBoard sina prickar
+        for (int i = 0; i < ge.zebraList.size(); i++){ // loop som placerar Zebror i Zebralistan på en plats i GameBoard
+            test.placeGamePieceZ(ge.zebraList.get(i).getPositionX(),
+                    ge.zebraList.get(i).getPositionY());
+        }
+        for (int i = 0; i < ge.cheetahList.size(); i++){ // loop som placerar Geparder i Cheetahlistan på en plats i GameBoard
+            test.placeGamePieceG(ge.cheetahList.get(i).getPositionX(),
+                    ge.cheetahList.get(i).getPositionY());
+        }
+        test.printBoard(); // testutskrift ut gameboard med cheetahs och zebror på sina startplatser
     }
 }

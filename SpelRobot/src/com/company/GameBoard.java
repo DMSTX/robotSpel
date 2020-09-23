@@ -3,74 +3,56 @@ package com.company;
 public class GameBoard {
 
     //Klassmedlemmar
-    public char zebra = 'z';
-    public char cheetah = 'c';
-    public char[][] gameboard = new char[10][10];
+    private char cheetah = 'c';
+    private char[][] gameboard;
+    private  int width, heigth;
 
-    //Defaultkonstruktor
+    //Default konstruktor
     public GameBoard() {
         startGameboard();
     }
 
+    public GameBoard(int width, int height){
+        this.width = width;
+        this.heigth = height;
+        this.gameboard = new char[this.heigth][this.width];
+    }
+
     //Metod som fyller spelplan med punkter
     public void startGameboard() {
-        for (int i = 0; i < gameboard.length; i++) {
-            for (int j = 0; j < gameboard.length; j++) {
-                gameboard[j][j] = '.';
+        for (int i = 0; i < this.heigth; i++) {
+            for (int j = 0; j < this.width; j++) {
+                this.gameboard[i][j] = '.';
             }
-            gameboard[i][i] = '.';
         }
     }
 
     //Metod som skriver ut spelplan
-    public void printBoard(char[][] gameboard) {
-        startGameboard();
-        for (int i = 0; i < gameboard.length; i++) {
-            for (int j = 0; j < gameboard.length; j++) {
-                System.out.print(gameboard[j][j]);
-            }
-            System.out.println(gameboard[i][i]);
-        }
-    }
+    public void printBoard() {
 
-    //Metod som skriver ut spelplan uppdaterad med nya positioner
-    public void printNewBoard(char[][] gameboard) {
-        this.gameboard = gameboard;
-        for (int i = 0; i < this.gameboard.length; i++) {
-            for (int j = 0; j < this.gameboard.length; j++) {
-                System.out.print(this.gameboard[j][j]);
+        //startGameboard();
+        for (int i = 0; i < this.heigth; i++) {
+            for (int j = 0; j < this.width; j++) {
+                System.out.print(this.gameboard[i][j]);
             }
-            System.out.println(this.gameboard[i][i]);
+            System.out.println("");
         }
     }
 
     //Metod för att placera Zebror
-    /*public char placeGamePieceZ(int x, int y) { //Placera gamepieces Z
-        //clearPosition(x,y);
-        GamePiece test = new GamePiece(); //association till gamepiece för att hämta positioner x och y
-        setGameboard()
-                [test.getPositionX()][test.getPositionY()] = zebra;
+    public void placeGamePieceZ(int x, int y) { //Placera gamepieces Z
+        //association till gamepiece för att hämta positioner x och y
+        this.gameboard[x][y] = 'z';
 
-        return this.gameboard [x][y];
         //System.out.println(gameboard[x][y]); //testa utskrift för position x och y
-        //printNewBoard(gameboard);
-    }*/
-
-    //Setter för Gameboard
-    public void setGameboard(char[][] gameboard) {
-        Zebra z = new Zebra();
-        System.out.println(z.getPositionX());
-        //gameboard [x][y] = zebra;
-        //this.gameboard = gameboard;
     }
 
-    //Metod som tar bort innehåll på en position i spelplanen
-    /*public void clearPosition (int x, int y){
-    this.gameboard [x] [y] = ' ';*/
+    //Metod för att placera Geparder
+    public void placeGamePieceG(int x, int y) { //Placera gamepieces Z
+        //association till gamepiece för att hämta positioner x och y
+        this.gameboard[x][y] = 'g';
+
+        //System.out.println(gameboard[x][y]); //testa utskrift för position x och y
+    }
+
 }
-
-
-
-
-
-
