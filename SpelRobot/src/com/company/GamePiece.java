@@ -2,18 +2,24 @@ package com.company;
 
 import java.util.Random;
 
-public class GamePiece {
+public abstract class GamePiece {
     //Klassmedlemmar
     private int positionX;
     private int positionY;
     private Direction direction; // en enum riktning
 
-    //Defaultkonstruktor som sätter random startpositioner och riktning
+    //Defaultkonstruktor som sätter bestämda värden för x och y
     public GamePiece() {
-        Random rand = new Random();
-        positionX = rand.nextInt(9); // Här behövs kontrollstruktur för att de inte ska hamna på samma plats!
-        positionY = rand.nextInt(9);
-        direction = randomDirection(); // tilldelar en slumpmässig enum Direction
+        positionX = 5;
+        positionY = 5;
+        setDirection(randomDirection());
+    }
+
+    //Konstruktor med in-parametrar
+    public GamePiece(int x, int y) {
+        setPositionX(x);
+        setPositionY(y);
+        setDirection(randomDirection()); // tilldelar en slumpmässig enum Direction
     }
 
     //Getter för positionX
@@ -28,7 +34,7 @@ public class GamePiece {
 
     //Getter för direction
     public Direction getDirection() {
-        return direction;
+        return this.direction;
     }
 
     //Slumpar fram en av 8 enum-riktningar
@@ -38,13 +44,14 @@ public class GamePiece {
         return Direction.values()[pick];
     }
 
-    /*//
-    DESSA ANVÄNDS INTE I NULÄGET
-    Setter för positionX
+    //Setter för direction
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    //Setter för positionX
     public void setPositionX(int x) {
-        if (x >= 0 && x <= 9) {
-            this.positionX = x;
-        }
+        this.positionX = x;
     }
 
     //Setter för positionY
@@ -52,5 +59,5 @@ public class GamePiece {
         if (y >= 0 && y <= 9) {
             this.positionY = y;
         }
-    }*/
+    }
 }

@@ -2,10 +2,17 @@ package com.company;
 
 public class Cheetah extends GamePiece {
     // Klassmedlemmar
-    boolean isHungry;
+    private boolean isHungry;
 
     //Defaultkonstruktor
-    public Cheetah(){
+    public Cheetah() {
+        super(5, 5);
+        isHungry = true;
+    }
+
+    //Konstruktor med parametrar
+    public Cheetah(int x, int y) {
+        super(x, y);
         isHungry = true;
     }
 

@@ -1,11 +1,8 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-enum Direction { //regler för hur en spelpjäs kan flytta sig
+enum Direction { //8 riktningar som tilldelas en GamePiece när den skapas
     down,
     left,
     right,
@@ -21,15 +18,21 @@ public class GameEngine {
     private int noOfZebras;
     private int noOfCheetahs;
 
-    // private GameBoard gameBoard = new GameBoard(); //Aggregat
-    // private GamePiece gamePiece = new GamePiece(); //Aggregat
+    //De fyra objekten nedan går ej att nå från Main ifall de får en åtkomstmodifierare.
+    //Vet ej varför men det är därför de inte har någon.
+    GameBoard gameBoard = new GameBoard(10, 10); // Aggregat
+    GamePiece[] gamePieceArray; //Aggregat
 
-    ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
-    ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
+    Stack<Integer> stackX = new Stack<>(); // sätta till private?
+    Stack<Integer> stackY = new Stack<>(); // sätta till private?
 
     public GameEngine() {   //defaultkonstruktor
         this.noOfZebras = 0;
         this.noOfCheetahs = 0;
+        fillStackX();
+        fillStackY();
+        shuffleStackX();
+        shuffleStackY();
     }
 
     // Medlemsmetoder
@@ -61,22 +64,58 @@ public class GameEngine {
         return n;
     }
 
-    public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
+    public void fillWithZebras(int noOfZebras) {
+        gamePieceArray = new GamePiece[noOfZebras + noOfCheetahs];
         for (int i = 0; i < noOfZebras; i++) {
-            zebraList.add(new Zebra());
+            gamePieceArray[i] = new Zebra(firstStackValueX(), firstStackValueY());
         }
     }
 
-    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med geparder
-        for (int i = 0; i < noOfCheetahs; i++) {
-            cheetahList.add(new Cheetah());
+    public void fillWithCheetahs(int noOfCheetahs, int noOfZebras) {
+        for (int i = noOfZebras; i < (noOfCheetahs + noOfZebras); i++) {
+            gamePieceArray[i] = new Cheetah(firstStackValueX(), firstStackValueY());
         }
     }
 
-    public void removeZebras() {
-        this.noOfZebras--;
-    } // Minskar antalet zebror med 1
+    // DET FINNS ETT FEL!
+    // Om man har ett högt antal Zebror, och antalet geparder ska slumpas fram så kan man få
+    // ett "Empty stack"-fel. Jag antar att "korten" tar slut om det är för många djur?
+    // Inte kollat anledning och lösning, men typ att ha fler kort i stacken? Eller en stack
+    // för geparder och en för zebror?
 
+    //fyller stack för X-kordinat
+    public void fillStackX() {
+        for (int i = 0; i < 10; i++) {
+            stackX.push(i);
+        }
+    }
+
+    //fyller stack för Y-kordinat
+    public void fillStackY() {
+        for (int i = 0; i < 10; i++) {
+            stackY.push(i);
+        }
+    }
+
+    //blandar stackX
+    public void shuffleStackX() {
+        Collections.shuffle(stackX);
+    }
+
+    //blandar stackY
+    public void shuffleStackY() {
+        Collections.shuffle(stackY);
+    }
+
+    // Hämtar översta värdet i stacken för X-värden
+    public int firstStackValueX() {
+        return stackX.pop();
+    }
+
+    // Hämtar översta värdet i stacken för Y-värden
+    public int firstStackValueY() {
+        return stackY.pop();
+    }
 
     // Getter och setter-metoder
     public int getNoOfZebras() {
@@ -87,16 +126,36 @@ public class GameEngine {
         return noOfCheetahs;
     }
 
+    public void setNoOfZebras(int noOfZebras) {
+        this.noOfZebras = noOfZebras;
+    }
+
     public void setNoOfCheetahs(int noOfZebras) { // Randomiserar antalet geparder mellan 1 och en mindre än antalet zebror
         Random rand = new Random();
-        if (noOfZebras == 1){
+        if (noOfZebras == 1) {
             this.noOfCheetahs = 1;
         } else {
             this.noOfCheetahs = rand.nextInt(noOfZebras - 1) + 1;
         }
     }
 
-    public void setNoOfZebras(int noOfZebras) {
-        this.noOfZebras = noOfZebras;
+    // ANVÄNDS INTE ÄN SÅ LÄNGE
+
+
+    // public void removeZebras() { // Minskar antalet zebror med 1
+    //        this.noOfZebras--;
+    //    }
+
+
+    /*public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
+        for (int i = 0; i < noOfZebras; i++) {
+            zebraList.add(new Zebra());
+        }
     }
+
+    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med geparder
+        for (int i = 0; i < noOfCheetahs; i++) {
+            cheetahList.add(new Cheetah());
+        }
+    }*/
 }

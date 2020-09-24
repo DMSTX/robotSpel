@@ -5,14 +5,15 @@ public class GameBoard {
     //Klassmedlemmar
     private char cheetah = 'c';
     private char[][] gameboard;
-    private  int width, heigth;
+    private int width, heigth;
 
-    //Default konstruktor
+    //Defaultkonstruktor
     public GameBoard() {
         startGameboard();
     }
 
-    public GameBoard(int width, int height){
+    //Konstruktor med parametrar
+    public GameBoard(int width, int height) {
         this.width = width;
         this.heigth = height;
         this.gameboard = new char[this.heigth][this.width];
@@ -29,8 +30,6 @@ public class GameBoard {
 
     //Metod som skriver ut spelplan
     public void printBoard() {
-
-        //startGameboard();
         for (int i = 0; i < this.heigth; i++) {
             for (int j = 0; j < this.width; j++) {
                 System.out.print(this.gameboard[i][j]);
@@ -39,20 +38,12 @@ public class GameBoard {
         }
     }
 
-    //Metod för att placera Zebror
-    public void placeGamePieceZ(int x, int y) { //Placera gamepieces Z
-        //association till gamepiece för att hämta positioner x och y
-        this.gameboard[x][y] = 'z';
-
-        //System.out.println(gameboard[x][y]); //testa utskrift för position x och y
+    //metod för att placera en gamepiece på brädet, för antingen cheetah eller zebra
+    public void placeGamePiece(GamePiece g, int x, int y) {
+        if (g.getClass() == Zebra.class){
+            this.gameboard[x][y] = 'z';
+        } else {
+            this.gameboard[x][y] = 'g';
+        }
     }
-
-    //Metod för att placera Geparder
-    public void placeGamePieceG(int x, int y) { //Placera gamepieces Z
-        //association till gamepiece för att hämta positioner x och y
-        this.gameboard[x][y] = 'g';
-
-        //System.out.println(gameboard[x][y]); //testa utskrift för position x och y
-    }
-
 }
