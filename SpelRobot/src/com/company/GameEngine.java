@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 enum Direction { //regler för hur en spelpjäs kan flytta sig
     down,
@@ -21,15 +18,22 @@ public class GameEngine {
     private int noOfZebras;
     private int noOfCheetahs;
 
-    // private GameBoard gameBoard = new GameBoard(); //Aggregat
-    // private GamePiece gamePiece = new GamePiece(); //Aggregat
+    private GameBoard gameBoard = new GameBoard(); //Aggregat
+    GamePiece[] gamePieceArray = new GamePiece[noOfZebras+noOfCheetahs]; //Aggregat
 
-    ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
-    ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
+    // ArrayList<Zebra> zebraList = new ArrayList<Zebra>(); // sätta till private?
+    // ArrayList<Cheetah> cheetahList = new ArrayList<Cheetah>(); // sätta till private?
+
+    Stack<Integer> stackX = new Stack<>(); // sätta till private?
+    Stack<Integer> stackY = new Stack<>(); // sätta till private?
 
     public GameEngine() {   //defaultkonstruktor
         this.noOfZebras = 0;
         this.noOfCheetahs = 0;
+        fillStackX();
+        fillStackY();
+        shuffleStackX();
+        shuffleStackY();
     }
 
     // Medlemsmetoder
@@ -61,7 +65,19 @@ public class GameEngine {
         return n;
     }
 
-    public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
+    public void fillWithZebras(int noOfZebras){
+        for (int i = 0; i < noOfZebras; i ++) {
+            gamePieceArray[i] = new Zebra(firstStackValue(), firstStackValue());
+        }
+    }
+
+    public void fillWithCheetahs(int noOfCheetahs, int noOfZebras){
+        for (int i = noOfZebras; i < (noOfCheetahs + noOfZebras); i ++) {
+            gamePieceArray[i] = new Cheetah(firstStackValue(), firstStackValue());
+        }
+    }
+
+    /*public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
         for (int i = 0; i < noOfZebras; i++) {
             zebraList.add(new Zebra());
         }
@@ -71,12 +87,35 @@ public class GameEngine {
         for (int i = 0; i < noOfCheetahs; i++) {
             cheetahList.add(new Cheetah());
         }
+    }*/
+
+    //fyller stack för X-kordinat
+    public void fillStackX() {
+        for (int i = 0; i < 10; i++) {
+            stackX.push(i);
+        }
     }
 
-    public void removeZebras() {
-        this.noOfZebras--;
-    } // Minskar antalet zebror med 1
+    //fyller stack för Y-kordinat
+    public void fillStackY() {
+        for (int i = 0; i < 10; i++) {
+            stackY.push(i);
+        }
+    }
 
+    //blandar stackX
+    public void shuffleStackX() {
+        Collections.shuffle(stackX);
+    }
+
+    //blandar stackY
+    public void shuffleStackY() {
+        Collections.shuffle(stackY);
+    }
+
+    public int firstStackValue() {
+        return stackX.pop();
+    }
 
     // Getter och setter-metoder
     public int getNoOfZebras() {
@@ -89,7 +128,7 @@ public class GameEngine {
 
     public void setNoOfCheetahs(int noOfZebras) { // Randomiserar antalet geparder mellan 1 och en mindre än antalet zebror
         Random rand = new Random();
-        if (noOfZebras == 1){
+        if (noOfZebras == 1) {
             this.noOfCheetahs = 1;
         } else {
             this.noOfCheetahs = rand.nextInt(noOfZebras - 1) + 1;
@@ -99,4 +138,9 @@ public class GameEngine {
     public void setNoOfZebras(int noOfZebras) {
         this.noOfZebras = noOfZebras;
     }
+
+// ANVÄNDS INTE ÄN SÅ LÄNGE
+    // public void removeZebras() { // Minskar antalet zebror med 1
+    //        this.noOfZebras--;
+    //    }
 }

@@ -12,10 +12,17 @@ public class Main {
         System.out.println(ge.getNoOfZebras()); // testutskrift för att se att antal zebror lästs in
         System.out.println(ge.getNoOfCheetahs()); // testutskrift för att se att antal cheetahs har satts
 
-        ge.fillZebraList(ge.getNoOfZebras()); // fyller en lista med det antal zeebra-objekt användaren angivit
-        ge.fillCheetahList(ge.getNoOfCheetahs()); // fyller en lista med det randomiserade antalet cheetah-objekt
+        ge.fillWithZebras(ge.getNoOfZebras()); // fyller listan med det antal zeebra-objekt användaren angivit
+        ge.fillWithCheetahs(ge.getNoOfCheetahs(), ge.getNoOfZebras()); // fyller listan med det randomiserade antalet cheetah-objekt
 
         for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att skriva ut listan med zebrornas x-position och y-position
+            System.out.print("Zebra Plats: ");
+            System.out.print(ge.gamePieceArray[i].getPositionX()+":");
+            System.out.print(ge.gamePieceArray[i].getPositionY());
+            System.out.println();
+        }
+
+        /*for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att skriva ut listan med zebrornas x-position och y-position
             System.out.print("Zebra Plats: ");
             System.out.print(ge.zebraList.get(i).getPositionX()+":");
             System.out.print(ge.zebraList.get(i).getPositionY());
@@ -45,7 +52,7 @@ public class Main {
 
         for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att kolla zebrornas direction-värden
             System.out.print("Zebra direction: ");
-            System.out.println(ge.zebraList.get(i).getDirection()+":");
-        }
+            System.out.println(ge.zebraList.get(i).getDirection());
+        }*/
     }
 }

@@ -5,7 +5,13 @@ public class Cheetah extends GamePiece {
     boolean isHungry;
 
     //Defaultkonstruktor
-    public Cheetah(){
+    public Cheetah() {
+        super(5, 5);
+        isHungry = true;
+    }
+
+    public Cheetah(int x, int y) {
+        super(x, y);
         isHungry = true;
     }
 
