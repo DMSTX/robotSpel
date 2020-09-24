@@ -40,6 +40,12 @@ public class Main {
             test.placeGamePieceG(ge.cheetahList.get(i).getPositionX(),
                     ge.cheetahList.get(i).getPositionY());
         }
+
         test.printBoard(); // testutskrift ut gameboard med cheetahs och zebror på sina startplatser
+
+        for (int i = 0; i < ge.getNoOfZebras(); i++) { //testutskrift för att kolla zebrornas direction-värden
+            System.out.print("Zebra direction: ");
+            System.out.println(ge.zebraList.get(i).getDirection()+":");
+        }
     }
 }

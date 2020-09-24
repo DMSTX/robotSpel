@@ -5,15 +5,14 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-enum direction { //regler för hur en spelpjäs kan flytta sig
-    //up (positionX -1, PositionY), //måste innehålla positioner x,y och begränsnigar
+enum Direction { //regler för hur en spelpjäs kan flytta sig
     down,
     left,
     right,
     diagUpLeft,
     diagUpRight,
     diagDownLeft,
-    diagDownRight
+    diagDownRight;
 }
 
 public class GameEngine {
