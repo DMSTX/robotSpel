@@ -43,7 +43,7 @@ public class GameBoard {
         if (g.getClass() == Zebra.class){
             this.gameboard[x][y] = 'z';
         } else {
-            this.gameboard[x][y] = 'g';
+            this.gameboard[x][y] = 'c';
         }
     }
 }
