@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Random;
 
-public abstract class GamePiece {
+public class GamePiece {
     //Klassmedlemmar
     private int positionX;
     private int positionY;
@@ -42,6 +42,61 @@ public abstract class GamePiece {
         Random rand = new Random();
         int pick = rand.nextInt(Direction.values().length);
         return Direction.values()[pick];
+    }
+
+    public void move(){
+        
+        switch (getDirection()){
+            case up:
+                subY();
+                break;
+            case down:
+                addY();
+                break;
+            case left:
+                subX();
+                break;
+            case right:
+                addX();
+                break;
+            case diagUpLeft:
+                addY();
+                subX();
+                break;
+            case diagUpRight:
+                addY();
+                addX();
+                break;
+            case diagDownLeft:
+                subY();
+                subY();
+                break;
+            case diagDownRight:
+                subY();
+                addX();
+                break;
+            default:
+        }
+    }
+
+    // Metod för att minska y-värdet hos ett objekt med 1
+    public void subY() {
+        setPositionY(getPositionY() - 1);
+    }
+
+    // Metod som ökar Y-värdet hos ett objekt med 1
+    public void addY() {
+        setPositionY(getPositionY() + 1);
+    }
+
+    // Metod som minskar värdet hos ett objekt med 1
+    public void subX(){
+        setPositionX(getPositionX() - 1);
+    }
+
+    // Metod som ökar värdet hos ett objekt med 1
+    public void addX(){
+        setPositionX(getPositionX() + 1);
     }
 
     //Setter för direction
