@@ -7,6 +7,8 @@ public class GamePiece {
     private int positionX;
     private int positionY;
     private Direction direction; // en enum riktning
+    private Direction lastDirection;
+
 
     //Defaultkonstruktor som sätter bestämda värden för x och y
     public GamePiece() {
@@ -44,8 +46,30 @@ public class GamePiece {
         return Direction.values()[pick];
     }
 
-    public void move(){
-        
+    public Direction checkBorder () {
+        //steg: kolla om positioner är på gräns av gameboard, ev ny direction,
+
+        //kolla om objekt har postion 0 eller 9,
+        Direction checkedDirection = getDirection();
+
+        if (getPositionX() == 0 || getPositionX() == 9 || getPositionY() == 0 || getPositionY() == 9) {
+
+            //av de som har 0 eller 9, avgör om de hamnat i hörnet
+            if ((getPositionX() == 0 || getPositionX() == 9) && (getPositionY() == 0 || getPositionY() == 9)) {
+                //setLastDirection(getDirection());
+                checkedDirection = cornerswitch(getPositionX(), getPositionY());
+            } else {
+
+                checkedDirection = randomDirection();
+            }
+        }
+        return checkedDirection;
+    }
+
+    public void move() {
+        setDirection(checkBorder());
+
+        //move on to switch to get new positions med en ny for-loop
         switch (getDirection()){
             case up:
                 subX();
@@ -75,8 +99,49 @@ public class GamePiece {
                 addX();
                 addY();
                 break;
-            default:
+
         }
+    }
+
+    public int decideCorner (int x, int y){
+        int cornerName;
+
+        if (x == 0 && y == 0) {
+            cornerName = 1;
+        } else if (x == 0 && y == 9) {
+            cornerName = 2;
+        } else if (x == 9 && y == 9) {
+            cornerName = 3;
+        } else {
+            cornerName = 4;
+        }
+        return cornerName;
+    }
+
+
+
+    public Direction cornerswitch (int x, int y) {
+        int cornerName = decideCorner(x, y);
+        Direction direction= null;
+
+
+        switch (cornerName) {
+            case 1:
+                direction = Direction.diagDownRight;
+                break;
+            case 2:
+                direction = Direction.diagDownLeft;
+                break;
+            case 3:
+                direction = Direction.diagUpLeft;
+                break;
+            case 4:
+                direction = Direction.diagUpRight;
+                break;
+
+
+        }
+        return direction;
     }
 
     // Metod för att minska y-värdet hos ett objekt med 1
@@ -90,12 +155,12 @@ public class GamePiece {
     }
 
     // Metod som minskar värdet hos ett objekt med 1
-    public void subX(){
+    public void subX() {
         setPositionX(getPositionX() - 1);
     }
 
     // Metod som ökar värdet hos ett objekt med 1
-    public void addX(){
+    public void addX() {
         setPositionX(getPositionX() + 1);
     }
 
@@ -104,15 +169,26 @@ public class GamePiece {
         this.direction = direction;
     }
 
+
     //Setter för positionX
     public void setPositionX(int x) {
-        this.positionX = x;
+        if (x >= 0 && x <= 9) {
+            this.positionX = x;
+        }
     }
-
     //Setter för positionY
     public void setPositionY(int y) {
         if (y >= 0 && y <= 9) {
             this.positionY = y;
         }
+    }
+
+    public Direction getLastDirection() {
+        return lastDirection;
+    }
+
+    public void setLastDirection(Direction lastDirection) {
+
+        this.lastDirection = lastDirection;
     }
 }

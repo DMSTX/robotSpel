@@ -24,7 +24,6 @@ public class GameEngine {
     //De fyra objekten nedan går ej att nå från Main ifall de får en åtkomstmodifierare.
     //Vet ej varför men det är därför de inte har någon.
     GameBoard gameBoard = new GameBoard(10, 10); // Aggregat
-    GamePiece gamePiece = new GamePiece();
     GamePiece[] gamePieceArray; //Aggregat
 
     Stack<Integer> stackX = new Stack<>(); // sätta till private?
@@ -42,6 +41,7 @@ public class GameEngine {
         shuffleChStackY();
         setOrgChStartX(createChStartX());
         setChStartX(reserveChStartX(getOrgChStartX()));
+
     }
 
     // Medlemsmetoder
@@ -75,7 +75,7 @@ public class GameEngine {
 
     public void fillWithZebras(int noOfZebras) {
         for (int i = 0; i < noOfZebras; i++) {
-            gamePieceArray[i] = new Zebra(firstStackValueX(), firstStackValueY());
+            gamePieceArray[i] = new Zebra(firstStackValueX(), startY());
         }
     }
 
@@ -86,35 +86,40 @@ public class GameEngine {
         }
     }
 
+
     //fyller stack för X-kordinat
     public void fillStackX() {
         for (int i = 0; i < 10; i++) {
             stackX.push(i);
         }
     }
-    public void addToStackX(int i){
+
+    public void addToStackX(int i) {
         stackX.push(i);
     }
 
     //fyller stack för Y-kordinat
     public void fillStackY() {
         for (int i = 0; i < 10; i++) {
-            for (int j=0; j < 10; j++){
-                stackY.push(i);}
+            for (int j = 0; j < 10; j++) {
+                stackY.push(i);
             }
         }
+    }
+
 
     //fyller stack för cheetah
-    public void fillChStackY(){
-        for (int i =0; i <10; i++){
+    public void fillChStackY() {
+        for (int i = 0; i < 10; i++) {
             chStackY.push(i);
         }
     }
 
     //blandar chStackY
-    public void  shuffleChStackY(){
+    public void shuffleChStackY() {
         Collections.shuffle(chStackY);
     }
+
     //blandar stackX
     public void shuffleStackX() {
         Collections.shuffle(stackX);
@@ -136,26 +141,31 @@ public class GameEngine {
     }
 
     // Hämtar översta värdet i stacken för cheetah Y-värden
-    public int firstChStackValueY(){ return chStackY.pop();}
+    public int firstChStackValueY() {
+        return chStackY.pop();
+    }
 
-    // Tar första värdet ur Zebrornas x-stack och ger det till geparderna
-    public int createChStartX(){
-        int chSX=(stackX.pop());
+    public int createChStartX() {
+        int chSX = (stackX.pop());
         return chSX;
     }
-    // Tar gepardernas x-värde och ökar eller minskar med 1, och skickar tillbaka till zebrornas x-stack
+
     public int reserveChStartX(int chSX) {
-        if (chSX<9){
+
+        if (chSX < 9) {
             chSX++;
             addToStackX(chSX);
-        }
-        else {
+        } else {
             chSX--;
-            addToStackX(chSX);}
+            addToStackX(chSX);
+        }
         return chSX;
     }
 
+
     // Getter och setter-metoder
+
+
     public int getOrgChStartX() {
         return orgChStartX;
     }
@@ -166,7 +176,7 @@ public class GameEngine {
 
     public int getChStartX() {
         return chStartX;
-    } // kanske att denna inte behövs? den anropas aldrig.
+    }
 
     public void setChStartX(int chStartX) {
         this.chStartX = chStartX;
@@ -192,8 +202,15 @@ public class GameEngine {
             this.noOfCheetahs = rand.nextInt(noOfZebras - 1) + 1;
         }
     }
+    public int startY() {
+        Random rand = new Random();
+        int startY = rand.nextInt(8) + 1;
+        return startY;
+    }
+
 
     // ANVÄNDS INTE ÄN SÅ LÄNGE
+
 
     // public void removeZebras() { // Minskar antalet zebror med 1
     //        this.noOfZebras--;
@@ -211,4 +228,6 @@ public class GameEngine {
             cheetahList.add(new Cheetah());
         }
     }*/
+
 }
+

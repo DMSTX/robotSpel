@@ -28,7 +28,7 @@ public class GameBoard {
         }
     }
 
-    // Metod som skriver ut spelplan
+    //Metod som skriver ut spelplan
     public void printBoard() {
         for (int i = 0; i < this.heigth; i++) {
             for (int j = 0; j < this.width; j++) {
@@ -38,7 +38,7 @@ public class GameBoard {
         }
     }
 
-    // metod för att placera en gamepiece på brädet, för antingen cheetah eller zebra
+    //metod för att placera en gamepiece på brädet, för antingen cheetah eller zebra
     public void placeGamePiece(GamePiece g, int x, int y) {
         if (g.getClass() == Zebra.class){
             this.gameboard[x][y] = 'z';
@@ -47,7 +47,6 @@ public class GameBoard {
         }
     }
 
-    // metod för att skriva ut en prick på gameBoard där det varit ett djur
     public void clearBoardPosition(int x, int y){
         this.gameboard[x][y] = '.';
     }
