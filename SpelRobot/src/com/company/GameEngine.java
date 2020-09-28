@@ -24,6 +24,7 @@ public class GameEngine {
     //De fyra objekten nedan går ej att nå från Main ifall de får en åtkomstmodifierare.
     //Vet ej varför men det är därför de inte har någon.
     GameBoard gameBoard = new GameBoard(10, 10); // Aggregat
+    GamePiece gamePiece = new GamePiece();
     GamePiece[] gamePieceArray; //Aggregat
 
     Stack<Integer> stackX = new Stack<>(); // sätta till private?
@@ -41,7 +42,6 @@ public class GameEngine {
         shuffleChStackY();
         setOrgChStartX(createChStartX());
         setChStartX(reserveChStartX(getOrgChStartX()));
-
     }
 
     // Medlemsmetoder
@@ -86,12 +86,6 @@ public class GameEngine {
         }
     }
 
-    // DET FINNS ETT FEL!
-    // Om man har ett högt antal Zebror, och antalet geparder ska slumpas fram så kan man få
-    // ett "Empty stack"-fel. Jag antar att "korten" tar slut om det är för många djur?
-    // Inte kollat anledning och lösning, men typ att ha fler kort i stacken? Eller en stack
-    // för geparder och en för zebror?
-
     //fyller stack för X-kordinat
     public void fillStackX() {
         for (int i = 0; i < 10; i++) {
@@ -109,7 +103,6 @@ public class GameEngine {
                 stackY.push(i);}
             }
         }
-
 
     //fyller stack för cheetah
     public void fillChStackY(){
@@ -145,12 +138,13 @@ public class GameEngine {
     // Hämtar översta värdet i stacken för cheetah Y-värden
     public int firstChStackValueY(){ return chStackY.pop();}
 
+    // Tar första värdet ur Zebrornas x-stack och ger det till geparderna
     public int createChStartX(){
         int chSX=(stackX.pop());
         return chSX;
     }
+    // Tar gepardernas x-värde och ökar eller minskar med 1, och skickar tillbaka till zebrornas x-stack
     public int reserveChStartX(int chSX) {
-
         if (chSX<9){
             chSX++;
             addToStackX(chSX);
@@ -162,8 +156,6 @@ public class GameEngine {
     }
 
     // Getter och setter-metoder
-
-
     public int getOrgChStartX() {
         return orgChStartX;
     }
@@ -174,7 +166,7 @@ public class GameEngine {
 
     public int getChStartX() {
         return chStartX;
-    }
+    } // kanske att denna inte behövs? den anropas aldrig.
 
     public void setChStartX(int chStartX) {
         this.chStartX = chStartX;
@@ -202,7 +194,6 @@ public class GameEngine {
     }
 
     // ANVÄNDS INTE ÄN SÅ LÄNGE
-
 
     // public void removeZebras() { // Minskar antalet zebror med 1
     //        this.noOfZebras--;
