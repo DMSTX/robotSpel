@@ -40,10 +40,16 @@ public class GameBoard {
 
     //metod för att placera en gamepiece på brädet, för antingen cheetah eller zebra
     public void placeGamePiece(GamePiece g, int x, int y) {
-        if (g.getClass() == Zebra.class){
+        if (g instanceof Zebra){
             this.gameboard[x][y] = 'z';
-        } else {
-            this.gameboard[x][y] = 'c';
+        }
+        else if (g instanceof Cheetah){
+            if (((Cheetah) g).isHungry() == false){
+                gameboard[x][y] = 'C';
+            }
+            else {
+                gameboard[x][y] = 'c';
+            }
         }
     }
 

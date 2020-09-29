@@ -1,6 +1,11 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 enum Direction { //8 riktningar som tilldelas en GamePiece när den skapas
     up,
@@ -51,6 +56,12 @@ public class GameEngine {
         return s;
     }
 
+    // väntar på knapptryck innan nästa steg sker
+    public void readKey() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        br.readLine();
+    }
+
     public int readNoOfZebras() { //prövar att läsa in en int från användaren och kollar att den är mellan 1 och 10.
         boolean x = true;
         int n = 0;
@@ -73,12 +84,14 @@ public class GameEngine {
         return n;
     }
 
+    //Fyller på med zebror i vektorn med gamePieces
     public void fillWithZebras(int noOfZebras) {
         for (int i = 0; i < noOfZebras; i++) {
             gamePieceArray[i] = new Zebra(firstStackValueX(), startY());
         }
     }
 
+    //Fyller på med geparder i vektorn med gamePieces
     public void fillWithCheetahs(int noOfCheetahs, int noOfZebras) {
         gamePieceArray = new GamePiece[noOfZebras + noOfCheetahs];
         for (int i = noOfZebras; i < (noOfCheetahs + noOfZebras); i++) {
@@ -86,19 +99,104 @@ public class GameEngine {
         }
     }
 
+    //placerar djuren på en ny tilldelad plats i GameBoard
+    public void placeOnGameBoard(){
+        for (int i = 0; i < gamePieceArray.length; i++) {
+            if (gamePieceArray[i] != null) {
+                gameBoard.placeGamePiece(gamePieceArray[i], gamePieceArray[i].getPositionX(),
+                        gamePieceArray[i].getPositionY());
+            }
+        }
+    }
 
-    //fyller stack för X-kordinat
+    //Sättar djur på sina startpositioner i GameBoard
+    public void makeStartBoard(){
+        for (int i = 0; i < gamePieceArray.length; i++){ // loop som placerar djuren på sin startplats i GameBoard
+            gameBoard.placeGamePiece(gamePieceArray[i], gamePieceArray[i].getPositionX(),
+                    gamePieceArray[i].getPositionY());
+        }
+    }
+
+    //kollar om objekt cheetah finns på samma position som Zebra, om ja, kill.
+    public void kill() throws InterruptedException {
+        for (int i = 0; i < gamePieceArray.length; i++) {
+            if (gamePieceArray[i] != null) {
+                if (gamePieceArray[i] instanceof Cheetah) {
+                    for (int j = 0; j < gamePieceArray.length; j++) {
+                        if (gamePieceArray[j] != null) {
+                            if (gamePieceArray[i].getPositionX() ==
+                                    gamePieceArray[j].getPositionX()) {
+                                if (gamePieceArray[i].getPositionY() ==
+                                        gamePieceArray[j].getPositionY()) {
+                                    if (gamePieceArray[j] instanceof Zebra) {
+                                        gamePieceArray[j] = null;
+                                        setNoOfZebras(getNoOfZebras() - 1);
+                                        ((Cheetah) gamePieceArray[i]).setHungry(false);
+                                        //TimeUnit.SECONDS.sleep(1);
+                                        System.out.println("\nEn zebra har blivit oppäten!"); // i utskrift som sker NU vill vi ha stort C
+                                        System.out.println("Nu finns det " + getNoOfZebras() + " zebror kvar.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //om hungrig gepard eller zebra: tilldelas ny position
+    public void moveIfHungry(){
+        for (int i = 0; i < gamePieceArray.length; i++) {
+            if (gamePieceArray[i] != null){
+                if (gamePieceArray[i] instanceof Cheetah) {
+                    if (((Cheetah) gamePieceArray[i]).isHungry() == false) {
+                        System.out.println("cheeta säger: ja e mätt");
+                        //skriva ut c men stora C
+                        continue;
+                    }
+                }
+                gameBoard.clearBoardPosition(gamePieceArray[i].getPositionX(),
+                        gamePieceArray[i].getPositionY());
+                gamePieceArray[i].move();
+            }
+        }
+    }
+
+    // ger tillbaka hungern på den/de mätta geparden/geparderna
+    public void giveHunger() {
+        for (int i = 0; i < gamePieceArray.length; i++) { //kollar move-metoden och clear-metoden
+            if (gamePieceArray[i] != null) {
+                if (gamePieceArray[i] instanceof Cheetah) {
+                    if (((Cheetah) gamePieceArray[i]).isHungry() == false) {
+
+                        if (((Cheetah) gamePieceArray[i]).getApetite() == 2) {
+                            ((Cheetah) gamePieceArray[i]).setApetite(0);
+                            ((Cheetah) gamePieceArray[i]).setHungry(true);
+                            System.out.println("nu har jag fått tillbaka min hunger");
+                        } else if (((Cheetah) gamePieceArray[i]).getApetite() < 2) {
+                            ((Cheetah) gamePieceArray[i]).setApetite(((Cheetah)
+                                    gamePieceArray[i]).getApetite() + 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //fyller stack för zebrornas X-kordinat
     public void fillStackX() {
         for (int i = 0; i < 10; i++) {
             stackX.push(i);
         }
     }
 
+    //lägger till kort i zebrornas X-stack
     public void addToStackX(int i) {
         stackX.push(i);
     }
 
-    //fyller stack för Y-kordinat
+    //fyller stack för zebrornas Y-kordinat
     public void fillStackY() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -107,8 +205,7 @@ public class GameEngine {
         }
     }
 
-
-    //fyller stack för cheetah
+    //fyller Y-stack för cheetah
     public void fillChStackY() {
         for (int i = 0; i < 10; i++) {
             chStackY.push(i);
@@ -202,6 +299,7 @@ public class GameEngine {
             this.noOfCheetahs = rand.nextInt(noOfZebras - 1) + 1;
         }
     }
+
     public int startY() {
         Random rand = new Random();
         int startY = rand.nextInt(8) + 1;
