@@ -3,7 +3,6 @@ package com.company;
 public class GameBoard {
 
     //Klassmedlemmar
-    private char cheetah = 'c';
     private char[][] gameboard;
     private int width, heigth;
 

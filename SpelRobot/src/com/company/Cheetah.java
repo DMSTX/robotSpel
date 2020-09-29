@@ -18,10 +18,6 @@ public class Cheetah extends GamePiece {
         isHungry = true;
     }
 
-    public void checkIfEven(){
-
-    }
-
     @Override
     public void subX() {
         if (getPositionX()==1 || getPositionX() == 8){

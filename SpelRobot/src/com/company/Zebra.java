@@ -2,21 +2,21 @@ package com.company;
 
 public class Zebra extends GamePiece {
     //Klassmedlemmar
-    private boolean isAlive;
+    //private boolean isAlive;
 
     //Defaultkonstruktor
     public Zebra(int x, int y) { //Konstruktor
         super(x, y);
-        isAlive = true;
+        //isAlive = true;
     }
 
     //Setter för isAlive
-    public void setAlive(boolean alive) {
+    /*public void setAlive(boolean alive) {
         this.isAlive = alive;
-    }
+    }*/
 
     //Getter för isAlive
-    public boolean isAlive() {
+    /*public boolean isAlive() {
         return isAlive;
-    }
+    }*/
 }

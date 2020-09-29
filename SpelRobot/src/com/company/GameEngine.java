@@ -26,20 +26,18 @@ public class GameEngine {
     private int chStartX;
     private int orgChStartX;
 
-    //De fyra objekten nedan går ej att nå från Main ifall de får en åtkomstmodifierare.
-    //Vet ej varför men det är därför de inte har någon.
     GameBoard gameBoard = new GameBoard(10, 10); // Aggregat
     GamePiece[] gamePieceArray; //Aggregat
 
     Stack<Integer> stackX = new Stack<>(); // sätta till private?
-    Stack<Integer> stackY = new Stack<>(); // sätta till private?
-    Stack<Integer> chStackY = new Stack<>();//sätta till private?
+    Stack<Integer> stackY = new Stack<>();
+    Stack<Integer> chStackY = new Stack<>();
 
     public GameEngine() {   //defaultkonstruktor
         this.noOfZebras = 0;
         this.noOfCheetahs = 0;
         fillStackX();
-        fillStackY();
+        //fillStackY();
         fillChStackY();
         shuffleStackX();
         shuffleStackY();
@@ -117,6 +115,15 @@ public class GameEngine {
         }
     }
 
+  /*  public void checkForZebras (GamePiece c) {
+        int[][] zebraXy;
+        int[] gepardGranne = new int[8];
+
+        gepardGranne[0] = c.getPositionX()
+
+    }*/
+
+
     //kollar om objekt cheetah finns på samma position som Zebra, om ja, kill.
     public void kill() throws InterruptedException {
         for (int i = 0; i < gamePieceArray.length; i++) {
@@ -152,7 +159,6 @@ public class GameEngine {
                 if (gamePieceArray[i] instanceof Cheetah) {
                     if (((Cheetah) gamePieceArray[i]).isHungry() == false) {
                         System.out.println("cheeta säger: ja e mätt");
-                        //skriva ut c men stora C
                         continue;
                     }
                 }
@@ -162,6 +168,8 @@ public class GameEngine {
             }
         }
     }
+
+
 
     // ger tillbaka hungern på den/de mätta geparden/geparderna
     public void giveHunger() {
@@ -197,13 +205,13 @@ public class GameEngine {
     }
 
     //fyller stack för zebrornas Y-kordinat
-    public void fillStackY() {
+   /* public void fillStackY() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 stackY.push(i);
             }
         }
-    }
+    }*/
 
     //fyller Y-stack för cheetah
     public void fillChStackY() {
@@ -230,11 +238,6 @@ public class GameEngine {
     // Hämtar översta värdet i stacken för X-värden
     public int firstStackValueX() {
         return stackX.pop();
-    }
-
-    // Hämtar översta värdet i stacken för Y-värden
-    public int firstStackValueY() {
-        return stackY.pop();
     }
 
     // Hämtar översta värdet i stacken för cheetah Y-värden
@@ -271,9 +274,6 @@ public class GameEngine {
         this.orgChStartX = orgChStartX;
     }
 
-    public int getChStartX() {
-        return chStartX;
-    }
 
     public void setChStartX(int chStartX) {
         this.chStartX = chStartX;
@@ -306,26 +306,6 @@ public class GameEngine {
         return startY;
     }
 
-
-    // ANVÄNDS INTE ÄN SÅ LÄNGE
-
-
-    // public void removeZebras() { // Minskar antalet zebror med 1
-    //        this.noOfZebras--;
-    //    }
-
-
-    /*public void fillZebraList(int noOfZebras) { // Fyller en lista med zebror
-        for (int i = 0; i < noOfZebras; i++) {
-            zebraList.add(new Zebra());
-        }
-    }
-
-    public void fillCheetahList(int noOfCheetahs) { // Fyller en lista med geparder
-        for (int i = 0; i < noOfCheetahs; i++) {
-            cheetahList.add(new Cheetah());
-        }
-    }*/
 
 }
 

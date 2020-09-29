@@ -7,7 +7,6 @@ public class GamePiece {
     private int positionX;
     private int positionY;
     private Direction direction; // en enum riktning
-    private Direction lastDirection;
 
 
     //Defaultkonstruktor som sätter bestämda värden för x och y
@@ -183,12 +182,4 @@ public class GamePiece {
         }
     }
 
-    public Direction getLastDirection() {
-        return lastDirection;
-    }
-
-    public void setLastDirection(Direction lastDirection) {
-
-        this.lastDirection = lastDirection;
-    }
 }
