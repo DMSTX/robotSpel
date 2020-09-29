@@ -18,6 +18,43 @@ public class Cheetah extends GamePiece {
         isHungry = true;
     }
 
+    public void checkIfEven(){
+
+    }
+
+    @Override
+    public void subX() {
+        if (getPositionX()==1 || getPositionX() == 8){
+            setPositionX(getPositionX() - 1);
+        }
+        else{ setPositionX(getPositionX() - 2);}
+    }
+
+    @Override
+    public void subY() {
+        if (getPositionY()==1 || getPositionY() == 8){
+            setPositionY(getPositionY()-1);
+        }
+        else{setPositionY(getPositionY()-2);}
+
+    }
+
+    @Override
+    public void addX() {
+        if (getPositionX()==1 || getPositionX() == 8){
+            setPositionX(getPositionX() + 1);
+        }
+        else{ setPositionX(getPositionX() + 2);}
+    }
+
+    @Override
+    public void addY() {
+        if (getPositionY()==1 || getPositionY() == 8){
+            setPositionY(getPositionY()+1);
+        }
+        else{setPositionY(getPositionY()+2);}
+    }
+
     public int getApetite() {
         return apetite;
     }
