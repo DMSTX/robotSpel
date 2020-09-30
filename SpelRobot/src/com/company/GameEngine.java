@@ -3,6 +3,7 @@ package com.company;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Array;
 import java.sql.Time;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,7 @@ public class GameEngine {
     private int orgChStartX;
 
     GameBoard gameBoard = new GameBoard(10, 10); // Aggregat
+    GamePiece gP = new GamePiece(4,4); //Aggregat-gamepiece för att nå metoder
     GamePiece[] gamePieceArray; //Aggregat
 
     Stack<Integer> stackX = new Stack<>(); // sätta till private?
@@ -46,6 +48,7 @@ public class GameEngine {
         setChStartX(reserveChStartX(getOrgChStartX()));
 
     }
+
 
     // Medlemsmetoder
     public String menu() {  // Skriver ut menyn i början av spelet
@@ -115,14 +118,121 @@ public class GameEngine {
         }
     }
 
-  /*  public void checkForZebras (GamePiece c) {
-        int[][] zebraXy;
-        int[] gepardGranne = new int[8];
+    //Avgör vilka 3-8 rutor som befinner sig runt ett givet djurs position, returnerar en vektor med deras x-värden
+    public ArrayList<Integer> checkSurroundingsX(GameBoard gameBoard, int positionX, int positionY){ // tar in vår gameboard, och positionen x och y
+        int width = gameBoard.getWidth();
+        int height = gameBoard.getHeigth();
 
-        gepardGranne[0] = c.getPositionX()
+        ArrayList<Integer> xValues = new ArrayList<Integer>();
 
-    }*/
+        for (int j = positionX -1; j <= positionX +1; j ++){
+            for (int i = positionY -1; i <= positionY +1; i++){
+                if (i >= 0 && j >= 0 && i < height && j < width && !(j == positionX && i == positionY)){
+                    xValues.add(j);
+                }
+            }
+        }
 
+        return xValues;
+    }
+
+    //Avgör vilka 3-8 rutor som befinner sig runt ett givet djurs position, returnerar en vektor med deras y-värden
+    public ArrayList<Integer> checkSurroundingsY(GameBoard gameBoard, int positionX, int positionY){ // tar in vår gameboard, och positionen x och y
+        int width = gameBoard.getWidth();
+        int height = gameBoard.getHeigth();
+
+        ArrayList<Integer> yValues = new ArrayList<Integer>();
+
+        for (int j = positionX -1; j <= positionX +1; j ++){
+            for (int i = positionY -1; i <= positionY +1; i++){
+                if (i >= 0 && j >= 0 && i < height && j < width && !(j == positionX && i == positionY)){
+                    yValues.add(i);
+                }
+            }
+        }
+
+        return yValues;
+    }
+
+    //Kollar om det finns en zebra på nån av de 3-8 positionerna runt en gepard
+    public Zebra returnZebraIfClose(ArrayList<Integer> x, ArrayList<Integer> y, GamePiece[] gamePieceArray){
+        Zebra victim = null;
+
+        // HÄR KAN FINNAS FEEEEEL
+
+        for (int i = 0; i < gamePieceArray.length ; i++){
+            if (gamePieceArray[i] != null){
+                if (gamePieceArray[i] instanceof Cheetah){ // HÄr var det instance of zebra förut, det var fel.
+                    for (int j = 0; j < x.size() ; j++){
+                        if (gamePieceArray[i].getPositionX() == x.get(j)){
+                            for (int k = 0; k < y.size() ; k++){
+                                if (gamePieceArray[i].getPositionY() == y.get(k)){
+                                    victim = new Zebra (gamePieceArray[i].getPositionX(), gamePieceArray[i].getPositionY());
+                                    victim.setDirection(gamePieceArray[i].getDirection());
+                                    System.out.println("Zebrans position: " + gamePieceArray[i].getPositionX() + ":" +
+                                            gamePieceArray[i].getPositionY());
+                                    System.out.println("Zebrans riktning: " + gamePieceArray[i].getDirection());
+                                    i = gamePieceArray.length;
+                                    j = x.size();
+                                    k = y.size();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return victim;
+    }
+
+    //Kollar zebras nästa positions x
+    public int checkZebrasNextX(Zebra victim){
+        int x = 0;
+
+        switch (victim.getDirection()){
+            case up:
+            case diagUpLeft:
+            case diagUpRight:
+                victim.subX();
+                x = victim.getPositionX();
+                break;
+            case down:
+            case diagDownLeft:
+            case diagDownRight:
+                victim.addX();
+                x = victim.getPositionX();
+                break;
+            default:
+                x = victim.getPositionX();
+        }
+
+        return x;
+    }
+
+    //Kollar zebras nästa position y
+    public int checkZebrasNextY(Zebra victim){
+        int y = 0;
+
+        switch (victim.getDirection()){
+            case left:
+            case diagDownLeft:
+            case diagUpLeft:
+                victim.subY();
+                y = victim.getPositionY();
+                break;
+            case right:
+            case diagDownRight:
+            case diagUpRight:
+                victim.addY();
+                y = victim.getPositionY();
+                break;
+            default:
+                y = victim.getPositionY();
+        }
+
+        return y ;
+    }
 
     //kollar om objekt cheetah finns på samma position som Zebra, om ja, kill.
     public void kill() throws InterruptedException {
@@ -139,7 +249,6 @@ public class GameEngine {
                                         gamePieceArray[j] = null;
                                         setNoOfZebras(getNoOfZebras() - 1);
                                         ((Cheetah) gamePieceArray[i]).setHungry(false);
-                                        //TimeUnit.SECONDS.sleep(1);
                                         System.out.println("\nEn zebra har blivit oppäten!"); // i utskrift som sker NU vill vi ha stort C
                                         System.out.println("Nu finns det " + getNoOfZebras() + " zebror kvar.");
                                     }
@@ -168,7 +277,6 @@ public class GameEngine {
             }
         }
     }
-
 
 
     // ger tillbaka hungern på den/de mätta geparden/geparderna
@@ -262,6 +370,11 @@ public class GameEngine {
         return chSX;
     }
 
+    public int startY() {
+        Random rand = new Random();
+        int startY = rand.nextInt(8) + 1;
+        return startY;
+    }
 
     // Getter och setter-metoder
 
@@ -300,11 +413,6 @@ public class GameEngine {
         }
     }
 
-    public int startY() {
-        Random rand = new Random();
-        int startY = rand.nextInt(8) + 1;
-        return startY;
-    }
 
 
 }

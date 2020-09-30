@@ -5,6 +5,10 @@ public class Zebra extends GamePiece {
     //private boolean isAlive;
 
     //Defaultkonstruktor
+    public Zebra(){
+        super(5, 5);
+    }
+
     public Zebra(int x, int y) { //Konstruktor
         super(x, y);
         //isAlive = true;

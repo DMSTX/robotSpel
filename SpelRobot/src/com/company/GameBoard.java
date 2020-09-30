@@ -13,8 +13,8 @@ public class GameBoard {
 
     //Konstruktor med parametrar
     public GameBoard(int width, int height) {
-        this.width = width;
-        this.heigth = height;
+        setWidth(width);
+        setHeigth(height);
         this.gameboard = new char[this.heigth][this.width];
     }
 
@@ -54,5 +54,21 @@ public class GameBoard {
 
     public void clearBoardPosition(int x, int y){
         this.gameboard[x][y] = '.';
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeigth() {
+        return heigth;
+    }
+
+    public void setHeigth(int heigth) {
+        this.heigth = heigth;
     }
 }
